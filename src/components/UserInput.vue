@@ -1,10 +1,11 @@
 <template>
-  <input type="text" v-model="enteredValue" @keyup.space="spaceArePressed" @keypress="keyArePressed">
+  <input type="text" v-model="enteredValue" @keyup.space="spaceArePressed" @keypress="keyArePressed" @keyup="backspaceArePressed">
 </template>
 
 <script>
 export default {
-  emits: ['space-pressed', 'key-pressed'],
+  emits: ['space-pressed', 'key-pressed', 'backspace-pressed', 'cmd-backspace'],
+  props: ['restartGame'],
   data(){
     return {
       enteredValue: ''
@@ -16,9 +17,22 @@ export default {
       this.enteredValue = ''
     },
     keyArePressed(e){
-      console.log(e)
-      this.$emit('key-pressed', e)
+      this.$emit('key-pressed', e, this.enteredValue)
+    },
+    backspaceArePressed(e){
+      if (e.key === 'Backspace'){
+        this.$emit('backspace-pressed', this.enteredValue)
+      } else if (e.code === 'MetaLeft'){
+        this.$emit('cmd-backspace')
+      }
     }
+  },
+  watch: {
+    restartGame(v){
+      if (v === 0){
+        this.enteredValue = ''
+      }
+    },
   }
 }
 </script>
