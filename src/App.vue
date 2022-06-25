@@ -10,7 +10,7 @@
       :is-correct="item.isCorrect"
       ></current-word>
     </ul>
-    <user-input :restart-game="counter" @space-pressed="specePressed" @key-pressed="keyPressed" @backspace-pressed="backspacePressed" @cmd-backspace="removeWholeWord"></user-input>
+    <user-input :restart-game="counter" :end="end" :focus="focus" @space-pressed="specePressed" @key-pressed="keyPressed" @backspace-pressed="backspacePressed" @cmd-backspace="removeWholeWord"></user-input>
     <button @click="restartGame">Restart</button>
   </div>
   <end-allert 
@@ -34,6 +34,8 @@ export default {
   },
   data(){
     return {
+      timerId: 0,
+      focus: false,
       wordsCount: 0,
       correctWords: 0,
       wrongWords: 0,
@@ -529,28 +531,30 @@ export default {
     letter(value){
       if(value === 1 && this.counter === 0){
         const that = this
-        setTimeout(()=>{
+        that.timerId = setTimeout(()=>{
           that.end = true
           that.wordsVisible = false
-        }, 60000)
+        }, 5000)
       }
-    }
+    },
   },
   methods: {
     specePressed(enteredInput){
       enteredInput = enteredInput.split('')
       enteredInput.pop()
-      enteredInput = enteredInput.join('')
-
-      if (enteredInput === this.wordsInfo[this.counter].word){
+      if (enteredInput.length === 0){
         this.wordsInfo[this.counter].isCorrect = 'correct'
+      } else if (enteredInput.join('') === this.wordsInfo[this.counter].word){
+        this.wordsInfo[this.counter].isCorrect = 'correct'
+        this.wordsCount++
         this.correctWords++
-      } else if (enteredInput !== this.wordsInfo[this.counter].word){
+        this.counter++
+      } else if (enteredInput.join('') !== this.wordsInfo[this.counter].word){
         this.wordsInfo[this.counter].isCorrect = 'wrong'
         this.wrongWords++
+        this.wordsCount++
+        this.counter++
       }
-      this.wordsCount++
-      this.counter++
       this.wordsInfo[this.counter].isCorrect = 'highlight'
       this.letter = 0
     },
@@ -558,9 +562,7 @@ export default {
       const wordArr = this.wordsInfo[this.counter].word.split('')
       if ((event.key !== wordArr[this.letter]) && event.key !== ' '){
           this.wordsInfo[this.counter].isCorrect = 'wrong'
-        } else if (event.key === wordArr[this.letter]){
-          this.wordsInfo[this.counter].isCorrect = 'highlight'
-        } else if (event.key === ' '){
+        } else if (event.key === wordArr[this.letter] || event.key === ' '){
           this.wordsInfo[this.counter].isCorrect = 'highlight'
         }
       this.letter++
@@ -578,10 +580,15 @@ export default {
       this.end = false
       this.counter = 0
       this.letter = 0
+      this.wordsCount = 0
+      this.correctWords = 0
+      this.wrongWords = 0
+      this.focus = true
       for(let i = 0; i < this.wordsInfo.length; i++){
         this.wordsInfo[i].isCorrect = ''
         this.wordsInfo[0].isCorrect = 'highlight'
       }
+      clearTimeout(this.timerId)
     },
   }
 }

@@ -1,11 +1,11 @@
 <template>
-  <input type="text" v-model="enteredValue" @keyup.space="spaceArePressed" @keypress="keyArePressed" @keyup="backspaceArePressed">
+  <input type="text" v-model="enteredValue" @keyup.space="spaceArePressed" @keypress="keyArePressed" @keyup="backspaceArePressed" :disabled="end">
 </template>
 
 <script>
 export default {
   emits: ['space-pressed', 'key-pressed', 'backspace-pressed', 'cmd-backspace'],
-  props: ['restartGame'],
+  props: ['restartGame', 'end', 'focus'],
   data(){
     return {
       enteredValue: ''
@@ -33,6 +33,11 @@ export default {
         this.enteredValue = ''
       }
     },
+    end(v){
+      if (v===true){
+        this.enteredValue = ''
+      }
+    }
   }
 }
 </script>
