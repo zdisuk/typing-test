@@ -1,10 +1,10 @@
 <template>
-  <input type="text" v-model="enteredValue" @keyup.space="spaceArePressed" @keypress="keyArePressed" @keyup="backspaceArePressed" :disabled="end">
+  <input type="text" v-model="enteredValue" @keyup.space="spaceArePressed" @keyup="backspaceArePressed" :disabled="end">
 </template>
 
 <script>
 export default {
-  emits: ['space-pressed', 'key-pressed', 'backspace-pressed', 'cmd-backspace'],
+  emits: ['space-pressed', 'key-pressed', 'backspace-pressed', 'cmd-backspace', 'shift-pressed'],
   props: ['counter', 'letter', 'end', 'focus'],
   data(){
     return {
@@ -16,14 +16,15 @@ export default {
       this.$emit('space-pressed', this.enteredValue)
       this.enteredValue = ''
     },
-    keyArePressed(e){
-      this.$emit('key-pressed', e, this.enteredValue)
-    },
     backspaceArePressed(e){
       if (e.key === 'Backspace'){
         this.$emit('backspace-pressed', this.enteredValue)
       } else if (e.code === 'MetaLeft'){
         this.$emit('cmd-backspace')
+      } else if (e.key === 'Shift'){
+        this.$emit('shift-pressed')
+      } else {
+        this.$emit('key-pressed', e, this.enteredValue) 
       }
     }
   },

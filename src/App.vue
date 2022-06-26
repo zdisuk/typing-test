@@ -10,7 +10,7 @@
       :is-correct="item.isCorrect"
       ></current-word>
     </ul>
-    <user-input :counter="counter" :letter='letter' :end="end" @space-pressed="specePressed" @key-pressed="keyPressed" @backspace-pressed="backspacePressed" @cmd-backspace="removeWholeWord"></user-input>
+    <user-input @shift-pressed="shiftPressed" :counter="counter" :letter='letter' :end="end" @space-pressed="specePressed" @key-pressed="keyPressed" @backspace-pressed="backspacePressed" @cmd-backspace="removeWholeWord"></user-input>
     <show-timer :timer-counter="timerCounter"></show-timer>
     <button @click="restartGame">Restart</button>
   </div>
@@ -592,31 +592,36 @@ export default {
         this.counter++
       }
       this.wordsInfo[this.counter].isCorrect = 'highlight'
-      this.letter = 0
+      this.letter = -1
     },
-    keyPressed(event){
+    keyPressed(event, enteredValue){
       const wordArr = this.wordsInfo[this.counter].word.split('')
-      if ((event.key !== wordArr[this.letter]) && event.key !== ' ' && this.wrongLetter !== wordArr[this.letter-1]){
+      const inputSplit = enteredValue.split('')
+      if ((inputSplit[this.letter] !== wordArr[this.letter]) && event.key !== ' ' && enteredValue !== this.wordsInfo[this.counter].word){
           this.wordsInfo[this.counter].isCorrect = 'wrong'
-          this.wrongLetter = event.key
-        } else if ((event.key === wordArr[this.letter] && this.wrongLetter === wordArr[this.letter-1]) || event.key === ' '){
-          this.wordsInfo[this.counter].isCorrect = 'highlight'
-        }
-      console.log(this.wrongLetter, wordArr[this.letter-1])
+      } else if (inputSplit[this.letter] === wordArr[this.letter] || event.key === ' '){
+        this.wordsInfo[this.counter].isCorrect = 'highlight'
+      }
       this.letter++
     },
-    backspacePressed(){
-      if (this.letter > 0){
-        this.letter--
+    backspacePressed(enteredValue){
+      const wordArr = [...this.wordsInfo[this.counter].word]
+      enteredValue = [...enteredValue]
+        if (this.letter > 0){
+          this.letter--
+        }  
+      if (enteredValue[this.letter-1] === wordArr[this.letter-1]){
+        this.wrongLetter = wordArr[this.letter-1]
       }
-      if(this.letter === 1 && this.counter === 0){
-        clearInterval(this.intervalId)
-        console.log('interval stopped')
-        clearTimeout(this.timerId)
+      if (enteredValue[enteredValue.length-1] === this.wrongLetter || enteredValue.length === 0){
+        this.wordsInfo[this.counter].isCorrect = 'highlight'
       }
     },
     removeWholeWord(){
       this.letter = 0
+    },
+    shiftPressed(){
+      this.letter = this.letter
     },
     restartGame(){ 
       this.wordsVisible = true
