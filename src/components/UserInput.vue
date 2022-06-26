@@ -5,7 +5,7 @@
 <script>
 export default {
   emits: ['space-pressed', 'key-pressed', 'backspace-pressed', 'cmd-backspace'],
-  props: ['restartGame', 'end', 'focus'],
+  props: ['counter', 'letter', 'end', 'focus'],
   data(){
     return {
       enteredValue: ''
@@ -28,8 +28,8 @@ export default {
     }
   },
   watch: {
-    restartGame(v){
-      if (v === 0){
+    counter(v){
+      if (v === 0 && this.letter === 0){
         this.enteredValue = ''
       }
     },

@@ -10,7 +10,7 @@
       :is-correct="item.isCorrect"
       ></current-word>
     </ul>
-    <user-input :restart-game="counter" :end="end" :focus="focus" @space-pressed="specePressed" @key-pressed="keyPressed" @backspace-pressed="backspacePressed" @cmd-backspace="removeWholeWord"></user-input>
+    <user-input :counter="counter" :letter='letter' :end="end" @space-pressed="specePressed" @key-pressed="keyPressed" @backspace-pressed="backspacePressed" @cmd-backspace="removeWholeWord"></user-input>
     <show-timer :timer-counter="timerCounter"></show-timer>
     <button @click="restartGame">Restart</button>
   </div>
@@ -37,10 +37,10 @@ export default {
   },
   data(){
     return {
+      wrongLetter: '',
       timerCounter: 60,
       intervalId: 0,
       timerId: 0,
-      focus: false,
       wordsCount: 0,
       correctWords: 0,
       wrongWords: 0,
@@ -130,6 +130,290 @@ export default {
           isCorrect: '',
         },
         {
+          word: 'as',
+          isCorrect: 'under',
+        },
+        {
+          word: 'mean',
+          isCorrect: '',
+        },
+        {
+          word: 'than',
+          isCorrect: '',
+        },
+        {
+          word: 'been',
+          isCorrect: '',
+        },
+        {
+          word: 'write',
+          isCorrect: '',
+        },
+        {
+          word: 'both',
+          isCorrect: '',
+        },
+        {
+          word: 'eye',
+          isCorrect: '',
+        },
+        {
+          word: 'just',
+          isCorrect: '',
+        },
+        {
+          word: 'do',
+          isCorrect: '',
+        },
+        {
+          word: 'must',
+          isCorrect: '',
+        },
+        {
+          word: 'its',
+          isCorrect: '',
+        },
+        {
+          word: 'follow',
+          isCorrect: '',
+        },
+        {
+          word: 'man',
+          isCorrect: '',
+        },
+        {
+          word: 'his',
+          isCorrect: '',
+        },
+        {
+          word: 'that',
+          isCorrect: '',
+        },
+        {
+          word: 'know',
+          isCorrect: '',
+        },
+        {
+          word: 'put',
+          isCorrect: '',
+        },
+        {
+          word: 'use',
+          isCorrect: '',
+        },
+        {
+          word: 'would',
+          isCorrect: '',
+        },
+        {
+          word: 'open',
+          isCorrect: '',
+        },
+        {
+          word: 'my',
+          isCorrect: 'highlight',
+        },
+        {
+          word: 'between',
+          isCorrect: '',
+        },
+        {
+          word: 'we',
+          isCorrect: '',
+        },
+        {
+          word: 'say',
+          isCorrect: '',
+        },
+        {
+          word: 'might',
+          isCorrect: '',
+        },
+        {
+          word: 'name',
+          isCorrect: '',
+        },
+        {
+          word: 'sound',
+          isCorrect: '',
+        },
+        {
+          word: 'few',
+          isCorrect: '',
+        },
+        {
+          word: 'all',
+          isCorrect: '',
+        },
+        {
+          word: 'out',
+          isCorrect: '',
+        },
+        {
+          word: 'watch',
+          isCorrect: '',
+        },
+        {
+          word: 'long',
+          isCorrect: '',
+        },
+        {
+          word: 'can',
+          isCorrect: '',
+        },
+        {
+          word: 'quickly',
+          isCorrect: '',
+        },
+        {
+          word: 'thought',
+          isCorrect: '',
+        },
+        {
+          word: 'there',
+          isCorrect: '',
+        },
+        {
+          word: 'often',
+          isCorrect: '',
+        },
+        {
+          word: 'more',
+          isCorrect: '',
+        },
+        {
+          word: 'after',
+          isCorrect: '',
+        },
+        {
+          word: 'my',
+          isCorrect: '',
+        },
+        {
+          word: 'mountain',
+          isCorrect: 'highlight',
+        },
+        {
+          word: 'no',
+          isCorrect: '',
+        },
+        {
+          word: 'family',
+          isCorrect: '',
+        },
+        {
+          word: 'where',
+          isCorrect: '',
+        },
+        {
+          word: 'own',
+          isCorrect: '',
+        },
+        {
+          word: 'young',
+          isCorrect: '',
+        },
+        {
+          word: 'far',
+          isCorrect: '',
+        },
+        {
+          word: 'question',
+          isCorrect: '',
+        },
+        {
+          word: 'got',
+          isCorrect: '',
+        },
+        {
+          word: 'answer',
+          isCorrect: '',
+        },
+        {
+          word: 'this',
+          isCorrect: '',
+        },
+        {
+          word: 'time',
+          isCorrect: '',
+        },
+        {
+          word: 'side',
+          isCorrect: '',
+        },
+        {
+          word: 'group',
+          isCorrect: '',
+        },
+        {
+          word: 'too',
+          isCorrect: '',
+        },
+        {
+          word: 'for',
+          isCorrect: '',
+        },
+        {
+          word: 'mile',
+          isCorrect: '',
+        },
+        {
+          word: 'boy',
+          isCorrect: '',
+        },
+        {
+          word: 'has',
+          isCorrect: '',
+        },
+        {
+          word: 'talk',
+          isCorrect: '',
+        },
+        {
+          word: 'even',
+          isCorrect: 'highlight',
+        },
+        {
+          word: 'only',
+          isCorrect: '',
+        },
+        {
+          word: 'once',
+          isCorrect: '',
+        },
+        {
+          word: 'large',
+          isCorrect: '',
+        },
+        {
+          word: 'list',
+          isCorrect: '',
+        },
+        {
+          word: 'earth',
+          isCorrect: '',
+        },
+        {
+          word: 'such',
+          isCorrect: '',
+        },
+        {
+          word: 'move',
+          isCorrect: '',
+        },
+        {
+          word: 'tree',
+          isCorrect: '',
+        },
+        {
+          word: 'try',
+          isCorrect: '',
+        },
+        {
+          word: 'thought',
+          isCorrect: '',
+        },
+        {
           word: 'home',
           isCorrect: 'highlight',
         },
@@ -210,323 +494,63 @@ export default {
           isCorrect: '',
         },
         {
-          word: 'home',
-          isCorrect: 'highlight',
+          word: 'as',
+          isCorrect: 'under',
         },
         {
-          word: 'should',
+          word: 'mean',
           isCorrect: '',
         },
         {
-          word: 'once',
+          word: 'than',
           isCorrect: '',
         },
         {
-          word: 'him',
+          word: 'been',
           isCorrect: '',
         },
         {
-          word: 'house',
+          word: 'write',
           isCorrect: '',
         },
         {
-          word: 'off',
+          word: 'both',
           isCorrect: '',
         },
         {
-          word: 'mountain',
+          word: 'eye',
           isCorrect: '',
         },
         {
-          word: 'me',
+          word: 'just',
           isCorrect: '',
         },
         {
-          word: 'she',
+          word: 'do',
           isCorrect: '',
         },
         {
-          word: 'try',
+          word: 'must',
           isCorrect: '',
         },
         {
-          word: 'show',
+          word: 'its',
           isCorrect: '',
         },
         {
-          word: 'river',
+          word: 'follow',
           isCorrect: '',
         },
         {
-          word: 'need',
+          word: 'man',
           isCorrect: '',
         },
         {
-          word: 'along',
+          word: 'his',
           isCorrect: '',
         },
         {
-          word: 'who',
-          isCorrect: '',
-        },
-        {
-          word: 'America',
-          isCorrect: '',
-        },
-        {
-          word: 'until',
-          isCorrect: '',
-        },
-        {
-          word: 'it',
-          isCorrect: '',
-        },
-        {
-          word: 'also',
-          isCorrect: '',
-        },
-        {
-          word: 'quite',
-          isCorrect: '',
-        },
-        {
-          word: 'home',
-          isCorrect: 'highlight',
-        },
-        {
-          word: 'should',
-          isCorrect: '',
-        },
-        {
-          word: 'once',
-          isCorrect: '',
-        },
-        {
-          word: 'him',
-          isCorrect: '',
-        },
-        {
-          word: 'house',
-          isCorrect: '',
-        },
-        {
-          word: 'off',
-          isCorrect: '',
-        },
-        {
-          word: 'mountain',
-          isCorrect: '',
-        },
-        {
-          word: 'me',
-          isCorrect: '',
-        },
-        {
-          word: 'she',
-          isCorrect: '',
-        },
-        {
-          word: 'try',
-          isCorrect: '',
-        },
-        {
-          word: 'show',
-          isCorrect: '',
-        },
-        {
-          word: 'river',
-          isCorrect: '',
-        },
-        {
-          word: 'need',
-          isCorrect: '',
-        },
-        {
-          word: 'along',
-          isCorrect: '',
-        },
-        {
-          word: 'who',
-          isCorrect: '',
-        },
-        {
-          word: 'America',
-          isCorrect: '',
-        },
-        {
-          word: 'until',
-          isCorrect: '',
-        },
-        {
-          word: 'it',
-          isCorrect: '',
-        },
-        {
-          word: 'also',
-          isCorrect: '',
-        },
-        {
-          word: 'quite',
-          isCorrect: '',
-        },
-        {
-          word: 'home',
-          isCorrect: 'highlight',
-        },
-        {
-          word: 'should',
-          isCorrect: '',
-        },
-        {
-          word: 'once',
-          isCorrect: '',
-        },
-        {
-          word: 'him',
-          isCorrect: '',
-        },
-        {
-          word: 'house',
-          isCorrect: '',
-        },
-        {
-          word: 'off',
-          isCorrect: '',
-        },
-        {
-          word: 'mountain',
-          isCorrect: '',
-        },
-        {
-          word: 'me',
-          isCorrect: '',
-        },
-        {
-          word: 'she',
-          isCorrect: '',
-        },
-        {
-          word: 'try',
-          isCorrect: '',
-        },
-        {
-          word: 'show',
-          isCorrect: '',
-        },
-        {
-          word: 'river',
-          isCorrect: '',
-        },
-        {
-          word: 'need',
-          isCorrect: '',
-        },
-        {
-          word: 'along',
-          isCorrect: '',
-        },
-        {
-          word: 'who',
-          isCorrect: '',
-        },
-        {
-          word: 'America',
-          isCorrect: '',
-        },
-        {
-          word: 'until',
-          isCorrect: '',
-        },
-        {
-          word: 'it',
-          isCorrect: '',
-        },
-        {
-          word: 'also',
-          isCorrect: '',
-        },
-        {
-          word: 'quite',
-          isCorrect: '',
-        },
-        {
-          word: 'home',
-          isCorrect: 'highlight',
-        },
-        {
-          word: 'should',
-          isCorrect: '',
-        },
-        {
-          word: 'once',
-          isCorrect: '',
-        },
-        {
-          word: 'him',
-          isCorrect: '',
-        },
-        {
-          word: 'house',
-          isCorrect: '',
-        },
-        {
-          word: 'off',
-          isCorrect: '',
-        },
-        {
-          word: 'mountain',
-          isCorrect: '',
-        },
-        {
-          word: 'me',
-          isCorrect: '',
-        },
-        {
-          word: 'she',
-          isCorrect: '',
-        },
-        {
-          word: 'try',
-          isCorrect: '',
-        },
-        {
-          word: 'show',
-          isCorrect: '',
-        },
-        {
-          word: 'river',
-          isCorrect: '',
-        },
-        {
-          word: 'need',
-          isCorrect: '',
-        },
-        {
-          word: 'along',
-          isCorrect: '',
-        },
-        {
-          word: 'who',
-          isCorrect: '',
-        },
-        {
-          word: 'America',
-          isCorrect: '',
-        },
-        {
-          word: 'until',
-          isCorrect: '',
-        },
-        {
-          word: 'it',
-          isCorrect: '',
-        },
-        {
-          word: 'also',
-          isCorrect: '',
-        },
-        {
-          word: 'quite',
+          word: 'that',
           isCorrect: '',
         },
       ],
@@ -536,6 +560,7 @@ export default {
     letter(value){
       if(value === 1 && this.counter === 0){
         const that = this
+        console.log('interval started')
         that.intervalId = setInterval(() => {
           this.timerCounter--
         }, 1000)
@@ -543,6 +568,8 @@ export default {
           that.end = true
           that.wordsVisible = false
           clearInterval(that.intervalId)
+          console.log('interval stopped')
+          that.timerCounter = 0
         }, 60000)
       }
     },
@@ -569,16 +596,23 @@ export default {
     },
     keyPressed(event){
       const wordArr = this.wordsInfo[this.counter].word.split('')
-      if ((event.key !== wordArr[this.letter]) && event.key !== ' '){
+      if ((event.key !== wordArr[this.letter]) && event.key !== ' ' && this.wrongLetter !== wordArr[this.letter-1]){
           this.wordsInfo[this.counter].isCorrect = 'wrong'
-        } else if (event.key === wordArr[this.letter] || event.key === ' '){
+          this.wrongLetter = event.key
+        } else if ((event.key === wordArr[this.letter] && this.wrongLetter === wordArr[this.letter-1]) || event.key === ' '){
           this.wordsInfo[this.counter].isCorrect = 'highlight'
         }
+      console.log(this.wrongLetter, wordArr[this.letter-1])
       this.letter++
     },
     backspacePressed(){
       if (this.letter > 0){
         this.letter--
+      }
+      if(this.letter === 1 && this.counter === 0){
+        clearInterval(this.intervalId)
+        console.log('interval stopped')
+        clearTimeout(this.timerId)
       }
     },
     removeWholeWord(){
@@ -593,6 +627,7 @@ export default {
       this.correctWords = 0
       this.wrongWords = 0
       this.timerCounter = 60
+      this.wrongLetter = ''
 
       for(let i = 0; i < this.wordsInfo.length; i++){
         this.wordsInfo[i].isCorrect = ''
@@ -600,6 +635,7 @@ export default {
       }
       clearTimeout(this.timerId)
       clearInterval(this.intervalId)
+      console.log('interval stopped')
     },
   }
 }
