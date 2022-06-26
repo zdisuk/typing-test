@@ -11,6 +11,7 @@
       ></current-word>
     </ul>
     <user-input :restart-game="counter" :end="end" :focus="focus" @space-pressed="specePressed" @key-pressed="keyPressed" @backspace-pressed="backspacePressed" @cmd-backspace="removeWholeWord"></user-input>
+    <show-timer :timer-counter="timerCounter"></show-timer>
     <button @click="restartGame">Restart</button>
   </div>
   <end-allert 
@@ -25,15 +26,19 @@
 import UserInput from './components/UserInput.vue'
 import CurrentWord from './components/CurrentWord.vue'
 import EndAllert from './components/EndAllert.vue'
+import ShowTimer from './components/ShowTimer.vue'
 
 export default {
   components: {
     UserInput,
     CurrentWord,
     EndAllert,
+    ShowTimer,
   },
   data(){
     return {
+      timerCounter: 60,
+      intervalId: 0,
       timerId: 0,
       focus: false,
       wordsCount: 0,
@@ -531,10 +536,14 @@ export default {
     letter(value){
       if(value === 1 && this.counter === 0){
         const that = this
+        that.intervalId = setInterval(() => {
+          this.timerCounter--
+        }, 1000)
         that.timerId = setTimeout(()=>{
           that.end = true
           that.wordsVisible = false
-        }, 5000)
+          clearInterval(that.intervalId)
+        }, 60000)
       }
     },
   },
@@ -583,12 +592,14 @@ export default {
       this.wordsCount = 0
       this.correctWords = 0
       this.wrongWords = 0
-      this.focus = true
+      this.timerCounter = 60
+
       for(let i = 0; i < this.wordsInfo.length; i++){
         this.wordsInfo[i].isCorrect = ''
         this.wordsInfo[0].isCorrect = 'highlight'
       }
       clearTimeout(this.timerId)
+      clearInterval(this.intervalId)
     },
   }
 }
