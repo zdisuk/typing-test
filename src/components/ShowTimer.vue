@@ -12,7 +12,7 @@ export default {
       return this.timerCounter === 60 ? '1' : '0'
     },
     milisecondsToSeconds(){
-      return this.timerCounter === 60 ? '00' : this.timerCounter
+      return this.timerCounter === 60 ? '00' : this.timerCounter === 0 ? "00" : this.timerCounter
     }
   }
 }
