@@ -10,7 +10,14 @@
       :is-correct="item.isCorrect"
       ></current-word>
     </ul>
-    <user-input @shift-pressed="shiftPressed" :counter="counter" :letter='letter' :end="end" @space-pressed="specePressed" @key-pressed="keyPressed" @backspace-pressed="backspacePressed" @cmd-backspace="removeWholeWord"></user-input>
+    <user-input 
+    @shift-pressed="shiftPressed" 
+    :counter="counter" :letter='letter' 
+    :end="end" @space-pressed="specePressed" 
+    @key-pressed="keyPressed" 
+    @backspace-pressed="backspacePressed" 
+    @cmd-backspace="removeWholeWord"
+    ></user-input>
     <show-timer :timer-counter="timerCounter"></show-timer>
     <button @click="restartGame">Restart</button>
   </div>
@@ -21,7 +28,7 @@
   :wrong-words="wrongWords"
   ></end-allert>
 </template>
-
+wrongLetter
 <script>
 import UserInput from './components/UserInput.vue'
 import CurrentWord from './components/CurrentWord.vue'
@@ -37,7 +44,6 @@ export default {
   },
   data(){
     return {
-      wrongLetter: '',
       timerCounter: 60,
       intervalId: [],
       timerId: [],
@@ -561,7 +567,6 @@ export default {
       if(value === 1 && this.counter === 0){
         const that = this
         if (that.intervalId.length < 1 && that.timerId.length < 1){
-          console.log('interval started')
           that.intervalId.push(setInterval(() => {
             that.timerCounter--
           }, 1000))
@@ -569,7 +574,6 @@ export default {
             that.end = true
             that.wordsVisible = false
             clearInterval(that.intervalId[0])
-            console.log('interval stopped')
             that.timerCounter = 0
           }, 60000))
         }
@@ -599,7 +603,7 @@ export default {
     keyPressed(event, enteredValue){
       const wordArr = this.wordsInfo[this.counter].word.split('')
       const inputSplit = enteredValue.split('')
-      if ((inputSplit[this.letter] !== wordArr[this.letter]) && event.key !== ' ' && enteredValue !== this.wordsInfo[this.counter].word){
+      if ((inputSplit[this.letter] !== wordArr[this.letter]) && event.key !== ' '){
           this.wordsInfo[this.counter].isCorrect = 'wrong'
       } else if ((inputSplit[this.letter] === wordArr[this.letter] || event.key === ' ') && this.wordsInfo[this.counter].isCorrect !== 'wrong'){
         this.wordsInfo[this.counter].isCorrect = 'highlight'
@@ -607,15 +611,14 @@ export default {
       this.letter++
     },
     backspacePressed(enteredValue){
-      const wordArr = [...this.wordsInfo[this.counter].word]
-      enteredValue = [...enteredValue]
-        if (this.letter > 0){
-          this.letter--
-        }  
-      if (enteredValue[this.letter-1] === wordArr[this.letter-1]){
-        this.wrongLetter = wordArr[this.letter-1]
-      }
-      if (enteredValue[enteredValue.length-1] === this.wrongLetter || enteredValue.length === 0){
+      let wordArr = [...this.wordsInfo[this.counter].word]
+      let enteredValueArr = [...enteredValue]
+      if (this.letter > 0){
+        this.letter--
+      }  
+      wordArr.splice(this.letter, wordArr.length)
+      enteredValueArr.splice(this.letter, 1)
+      if (wordArr.join('') === enteredValueArr.join('') || enteredValue.length === 0){
         this.wordsInfo[this.counter].isCorrect = 'highlight'
       }
     },
@@ -634,7 +637,6 @@ export default {
       this.correctWords = 0
       this.wrongWords = 0
       this.timerCounter = 60
-      this.wrongLetter = ''
 
       for(let i = 0; i < this.wordsInfo.length; i++){
         this.wordsInfo[i].isCorrect = ''
@@ -644,7 +646,6 @@ export default {
       clearInterval(this.intervalId[0])
       this.timerId = []
       this.intervalId = []
-      console.log('interval stopped')
     },
   }
 }

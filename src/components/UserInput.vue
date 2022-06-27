@@ -1,5 +1,9 @@
 <template>
-  <input type="text" v-model="enteredValue" @keyup.space="spaceArePressed" @keyup="backspaceArePressed" :disabled="end">
+  <input type="text" 
+  v-model="enteredValue" 
+  @keyup.space="spaceArePressed" 
+  @keyup="backspaceArePressed" 
+  :disabled="end">
 </template>
 
 <script>
