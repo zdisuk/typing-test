@@ -599,7 +599,7 @@ export default {
       const inputSplit = enteredValue.split('')
       if ((inputSplit[this.letter] !== wordArr[this.letter]) && event.key !== ' ' && enteredValue !== this.wordsInfo[this.counter].word){
           this.wordsInfo[this.counter].isCorrect = 'wrong'
-      } else if (inputSplit[this.letter] === wordArr[this.letter] || event.key === ' '){
+      } else if ((inputSplit[this.letter] === wordArr[this.letter] || event.key === ' ') && this.wordsInfo[this.counter].isCorrect !== 'wrong'){
         this.wordsInfo[this.counter].isCorrect = 'highlight'
       }
       this.letter++
