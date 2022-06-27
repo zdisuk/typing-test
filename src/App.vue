@@ -39,8 +39,8 @@ export default {
     return {
       wrongLetter: '',
       timerCounter: 60,
-      intervalId: 0,
-      timerId: 0,
+      intervalId: [],
+      timerId: [],
       wordsCount: 0,
       correctWords: 0,
       wrongWords: 0,
@@ -560,17 +560,19 @@ export default {
     letter(value){
       if(value === 1 && this.counter === 0){
         const that = this
-        console.log('interval started')
-        that.intervalId = setInterval(() => {
-          this.timerCounter--
-        }, 1000)
-        that.timerId = setTimeout(()=>{
-          that.end = true
-          that.wordsVisible = false
-          clearInterval(that.intervalId)
-          console.log('interval stopped')
-          that.timerCounter = 0
-        }, 60000)
+        if (that.intervalId.length < 1 && that.timerId.length < 1){
+          console.log('interval started')
+          that.intervalId.push(setInterval(() => {
+            that.timerCounter--
+          }, 1000))
+          that.timerId.push(setTimeout(()=>{
+            that.end = true
+            that.wordsVisible = false
+            clearInterval(that.intervalId[0])
+            console.log('interval stopped')
+            that.timerCounter = 0
+          }, 60000))
+        }
       }
     },
   },
@@ -638,8 +640,10 @@ export default {
         this.wordsInfo[i].isCorrect = ''
         this.wordsInfo[0].isCorrect = 'highlight'
       }
-      clearTimeout(this.timerId)
-      clearInterval(this.intervalId)
+      clearTimeout(this.timerId[0])
+      clearInterval(this.intervalId[0])
+      this.timerId = []
+      this.intervalId = []
       console.log('interval stopped')
     },
   }
