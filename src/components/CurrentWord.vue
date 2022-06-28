@@ -12,7 +12,7 @@ export default {
       if (this.index === this.counter && this.isCorrect === 'highlight'){
         return {'highlight': true}
       }
-      return {'correct': this.isCorrect === 'correct', 'wrong': this.isCorrect === 'wrong'}
+      return {'correct': this.isCorrect === 'correct', 'wrong-letter': this.isCorrect === 'wrong-letter', 'wrong': this.isCorrect === 'wrong'}
     }
   }
 }
