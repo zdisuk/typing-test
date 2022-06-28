@@ -23,18 +23,18 @@ export default {
       return this.correctLetters + this.wrongLetters
     },
     calcAccuracy(){
-      function clearNumber(wletters, letters){
-      let res = 100 - ((wletters*100)/letters)
+      let res = 100 - ((this.wrongLetters*100)/(this.correctLetters+this.wrongLetters))
       res = res.toString()
       res = [...res]
-      for(let i = 0; i < res.length; i++){
+      for (let i = 0; i < res.length; i++){
         if(res[i] === '.'){
           res.splice(i+2, res.length)
           return res.join('')
+        } else if (res[i+2] === '0'){
+          res.splice(i, res.length)
+          return res.join('')
         }
       }
-      }
-      return clearNumber(this.wrongLetters, this.calcLetters)
     }
   }
 }
