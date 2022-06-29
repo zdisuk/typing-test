@@ -1,15 +1,18 @@
 <template>
   <input type="text" 
+  class="input-bar__input"
   v-model="enteredValue" 
   @keyup.space="spaceArePressed" 
-  @keyup="backspaceArePressed" 
-  :disabled="end">
+  @keyup="keyPressed" 
+  :disabled="end"
+  ref="inputFocus"
+  >
 </template>
 
 <script>
 export default {
-  emits: ['space-pressed', 'key-pressed', 'backspace-pressed', 'cmd-backspace', 'shift-pressed'],
-  props: ['counter', 'letter', 'end', 'focus'],
+  emits: ['space-pressed', 'key-pressed', 'backspace-pressed', 'cmd-backspace', 'shift-pressed', 'enter-pressed'],
+  props: ['counter', 'letter', 'end', 'started', 'restart'],
   data(){
     return {
       enteredValue: ''
@@ -20,21 +23,24 @@ export default {
       this.$emit('space-pressed', this.enteredValue)
       this.enteredValue = ''
     },
-    backspaceArePressed(e){
+    keyPressed(e){
+      console.log(e)
       if (e.key === 'Backspace'){
         this.$emit('backspace-pressed', this.enteredValue)
       } else if (e.code === 'MetaLeft'){
         this.$emit('cmd-backspace')
       } else if (e.key === 'Shift'){
         this.$emit('shift-pressed')
+      } else if (e.key === 'Enter' || e.key === 'Tab'){
+        this.$emit('enter-pressed')
       } else {
         this.$emit('key-pressed', e, this.enteredValue) 
       }
-    }
+    },
   },
   watch: {
-    counter(v){
-      if (v === 0 && this.letter === 0){
+    letter(v){
+      if (v === 0 && this.counter === 0){
         this.enteredValue = ''
       }
     },
@@ -42,16 +48,17 @@ export default {
       if (v===true){
         this.enteredValue = ''
       }
+    },
+    started(v){
+      if(v === true){
+        this.$nextTick(() => this.$refs.inputFocus.focus())
+      }
+    },
+    restart(v){
+      if(v===true || v===false){
+        this.$refs.inputFocus.focus()
+      }
     }
   }
 }
 </script>
-
-<style scoped>
-input{
-  padding: 5px 10px;
-  font-size: 1.3em;
-  outline: none;
-  width: 300px;
-}
-</style>

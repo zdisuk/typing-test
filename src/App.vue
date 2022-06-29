@@ -1,6 +1,6 @@
 <template>
-  <button @click="startGame" v-if="gameStarted===false">Start Game</button>
-  <div class="area" v-if="gameStarted">
+  <button class="start" @click="startGame" v-if="gameStarted===false">Start Game</button>
+  <div class="area" v-show="gameStarted">
     <ul class="area__words" v-if="wordsVisible">
       <current-word
       v-for="(item, index) in wordsInfo"
@@ -11,16 +11,23 @@
       :is-correct="item.isCorrect"
       ></current-word>
     </ul>
-    <user-input 
-    @shift-pressed="shiftPressed" 
-    :counter="counter" :letter='letter' 
-    :end="end" @space-pressed="specePressed" 
-    @key-pressed="keyPressed" 
-    @backspace-pressed="backspacePressed" 
-    @cmd-backspace="removeWholeWord"
-    ></user-input>
-    <show-timer :timer-counter="timerCounter"></show-timer>
-    <button @click="restartGame" v-if="gameStarted">Restart</button>
+    <input-bar>
+      <user-input
+      @shift-pressed="shiftPressed" 
+      :counter="counter" 
+      :letter='letter' 
+      :end="end" 
+      :started="gameStarted"
+      :restart="restart"
+      @space-pressed="specePressed" 
+      @key-pressed="keyPressed" 
+      @backspace-pressed="backspacePressed" 
+      @cmd-backspace="removeWholeWord"
+      @enter-pressed="enterPressed"
+      ></user-input>
+      <show-timer :timer-counter="timerCounter"></show-timer>
+      <button class="input-bar__restart" @click="restartGame" v-if="gameStarted"><img src="./assets/restart.png" alt="restart"></button>
+    </input-bar>
   </div>
   <end-allert 
   v-if="end" 
@@ -37,6 +44,7 @@ import UserInput from './components/UserInput.vue'
 import CurrentWord from './components/CurrentWord.vue'
 import EndAllert from './components/EndAllert.vue'
 import ShowTimer from './components/ShowTimer.vue'
+import InputBar from './components/InputBar.vue'
 
 export default {
   components: {
@@ -44,10 +52,12 @@ export default {
     CurrentWord,
     EndAllert,
     ShowTimer,
+    InputBar,
   },
   data(){
     return {
       gameStarted: false,
+      restart: false,
       timerCounter: 60,
       intervalId: [],
       timerId: [],
@@ -67,6 +77,7 @@ export default {
   watch: {
     letter(value){
       if(value === 1 && this.counter === 0){
+        this.restart = false
         const that = this
         if (that.intervalId.length < 1 && that.timerId.length < 1){
           that.intervalId.push(setInterval(() => {
@@ -106,10 +117,10 @@ export default {
       this.letterCount++
       const wordArr = this.wordsInfo[this.counter].word.split('')
       const inputSplit = enteredValue.split('')
-      if ((inputSplit[this.letter] !== wordArr[this.letter]) && event.key !== ' '){
+      if ((inputSplit[this.letter] !== wordArr[this.letter]) && event.key !== ' ' && (event.key !== 'Enter' || event.key !== 'Tab')){
           this.wordsInfo[this.counter].isCorrect = 'wrong-letter'
           this.wrongLetters++
-      } else if ((inputSplit[this.letter] === wordArr[this.letter] || event.key === ' ') && this.wordsInfo[this.counter].isCorrect !== 'wrong-letter'){
+      } else if ((inputSplit[this.letter] === wordArr[this.letter] || event.key === ' ' || event.key === 'Enter' || event.key === 'Tab') && this.wordsInfo[this.counter].isCorrect !== 'wrong-letter'){
         this.wordsInfo[this.counter].isCorrect = 'highlight'
         this.correctLetters++
       }
@@ -133,12 +144,20 @@ export default {
     shiftPressed(){
       this.letter = this.letter
     },
+    enterPressed(){
+      this.wordsInfo[this.counter].isCorrect = 'highlight'
+      // clearInterval(this.intervalId[0])
+      // clearTimeout(this.timerId[0])
+      // this.intervalId = []
+      // this.timerId = []
+    },
     startGame(){
       this.gameStarted = true
       this.wordsVisible = true
       this.wordsInfo = this.randomWords(this.words)
     },
     restartGame(){ 
+      this.restart = !this.restart
       this.wordsVisible = true
       this.end = false
       this.counter = 0
@@ -183,55 +202,136 @@ export default {
 </script>
 
 <style lang="scss">
+*{
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
 body{
-  width: 100vw;
-  height: 100vh;
+  width: 100%;
+  height: 100%;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  font-family: sans-serif;
+  font-family: 'Times New Roman, Times', serif;
+  line-height: 1.6em;
+  background-color: #101010;
+  background-image: url('./assets/background.jpeg');
+  background-repeat: no-repeat;
+  background-size: 100vw;
+  backdrop-filter: blur(5px);
 }
-ul{
-  list-style: none;
+#app{
   display: flex;
-  flex-wrap: wrap;
-  // justify-content: space-between;
-  margin: 0;
-  padding: 0;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100vw;
+  height: 100vh;
+}
+.start{
+  background-color: #939393b1;
+  border: none;
+  color: rgb(255, 255, 255);
+  font-weight: normal;
+  width: 200px;
+  height: 60px;
+  // padding: 20px 40px;
+  font-size: 1.7em;
+  // backdrop-filter: blur(10px);
+  border-radius: 15px;
+  transition-duration: 0.3s;
+    &:hover{
+      transform: scale(1.05);
+      // border-radius: 20px;
+      // box-shadow: 2px 5px 3px;
+      cursor: pointer;
+    }
 }
 .area{
   display: flex;
   flex-direction: column;
+  justify-content: center;
   align-items: center;
+  width: 800px;
     &__words{
-      border: 1px solid black;
-      padding: 15px 30px;
-      width: 400px;
+      color: #111111;
+      margin: 0;
+      padding: 10px 20px;
+      width: 100%;
       height: fit-content;
-      // max-height: fit-content;
       overflow: hidden;
       margin-bottom: 30px;
+      list-style: none;
+      display: flex;
+      flex-wrap: wrap;
+      background-color: rgba(255, 255, 255, 0.907);
+      backdrop-filter: blur(5px);
+      border-radius: 4px;
     }
 }
+.input-bar{
+    &__input{
+      margin-left: 10px;
+      border-radius: 4px;
+      width: 500px;
+      height: 100%;
+      padding: 6px 12px;
+      font-size: 1.8em;
+      font-family: 'Times New Roman, Times', serif;
+      border: none;
+      outline: none;
+    }
+    &__timer{
+      width: 60px;
+      height: 100%;
+      background-color: #939393b1;
+      color: white;
+      font-size: 0.9em;
+      margin-left: 10px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      border-radius: 4px;
+    }
+    &__restart{
+      width: 60px;
+      height: 100%;
+      margin-left: 10px;
+      border-radius: 4px;
+      background-color: #939393b1;
+      outline: none;
+      border: none;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+        & img{
+          width: 30px;
+          height: 30px;
+        }
+    }
+}
+
 span{
   display: inline-block;
-  font-size: 1.3em;
-  padding: 2.5px 5px;
+  font-size: 1.8em;
+  padding: 5px 7px;
+  border-radius: 5px;
 }
 .highlight{
-  background-color: #bfbfbf99;
-  color: black;
+  background-color: #acacacc3;
+  // color: black;
 }
 .correct{
-  color: rgb(10, 118, 10);
+  color: green;
 }
 .wrong-letter{
-  background-color: rgb(218, 33, 0);
-  color: white
+  background-color: red;
+  color: #111111
 }
 .wrong{
-  color: rgb(218, 33, 0);
+  color: red;
 }
 
 </style>

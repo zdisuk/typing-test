@@ -1,6 +1,6 @@
 <template>
-  <div class = 'timer'>
-    <span class = 'timer__counter'>{{ secondsToMinutes }}:{{ milisecondsToSeconds }}</span>
+  <div class = 'input-bar__timer'>
+    <span>{{ secondsToMinutes }}:{{ milisecondsToSeconds }}</span>
   </div>
 </template>
 
