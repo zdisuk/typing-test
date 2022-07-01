@@ -75,8 +75,6 @@ export default {
   justify-content: center;
   align-items: center;
 		&__title {
-      // font-family: sans-serif;
-      // color: rgba(98, 255, 0, 0.592);
       color: rgba(35, 35, 35, 0.825);
       font-size: 2.2em;
       font-weight: bold;

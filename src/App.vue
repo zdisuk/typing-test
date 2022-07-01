@@ -13,7 +13,6 @@
     </ul>
     <input-bar>
       <user-input
-      @shift-pressed="shiftPressed" 
       :counter="counter" 
       :letter='letter' 
       :end="end" 
@@ -23,10 +22,18 @@
       @key-pressed="keyPressed" 
       @backspace-pressed="backspacePressed" 
       @cmd-backspace="removeWholeWord"
+      @shift-pressed="shiftPressed" 
       @enter-pressed="enterPressed"
       ></user-input>
-      <show-timer :timer-counter="timerCounter" :timer-vissible="timerVissible" @toggle-timer="toggleTimer"></show-timer>
-      <button class="input-bar__restart" @click="restartGame" v-if="gameStarted"><img src="./assets/restart.png" alt="restart"></button>
+      <show-timer 
+      :timer-counter="timerCounter" 
+      :timer-vissible="timerVissible" 
+      @toggle-timer="toggleTimer"
+      ></show-timer>
+      <button 
+      class="input-bar__restart" 
+      @click="restartGame" 
+      ><img src="./assets/restart.png" alt="restart"></button>
     </input-bar>
   </div>
   <end-allert 
@@ -141,16 +148,13 @@ export default {
     },
     removeWholeWord(){
       this.letter = 0
+      this.wordsInfo[this.counter].isCorrect = 'highlight'
     },
     shiftPressed(){
       this.letter = this.letter
     },
     enterPressed(){
       this.wordsInfo[this.counter].isCorrect = 'highlight'
-      // clearInterval(this.intervalId[0])
-      // clearTimeout(this.timerId[0])
-      // this.intervalId = []
-      // this.timerId = []
     },
     startGame(){
       this.gameStarted = true
@@ -169,16 +173,15 @@ export default {
       this.correctLetters = 0
       this.wrongLetters = 0
       this.timerCounter = 60
-
-      for(let i = 0; i < this.wordsInfo.length; i++){
-        this.wordsInfo[i].isCorrect = ''
-        this.wordsInfo[0].isCorrect = 'highlight'
-      }
       clearTimeout(this.timerId[0])
       clearInterval(this.intervalId[0])
       this.timerId = []
       this.intervalId = []
       this.wordsInfo = this.randomWords(this.words)
+      for(let i = 0; i < this.wordsInfo.length; i++){
+        this.wordsInfo[i].isCorrect = ''
+        this.wordsInfo[0].isCorrect = 'highlight'
+      }
     },
     toggleTimer(){
       this.timerVissible = !this.timerVissible
@@ -191,13 +194,10 @@ export default {
             str[i] = " "
           }
         }
-
         str = str.join('').split(' ')
-
         for(let i = 0; i < 130; i++){
           wordsInfo.push({word: str[Math.floor(Math.random()*130)], isCorrect: ''})
         }
-
         wordsInfo[0].isCorrect = 'highlight'
         return wordsInfo
     }
@@ -241,15 +241,12 @@ body{
   font-weight: normal;
   width: 200px;
   height: 60px;
-  // padding: 20px 40px;
   font-size: 1.7em;
-  // backdrop-filter: blur(10px);
   border-radius: 4px;
   transition-duration: 0.2s;
     &:hover{
       transform: scale(1.05);
-      // border-radius: 20px;
-      // box-shadow: 2px 5px 3px;
+      background-color: #5b5b5be2;
       cursor: pointer;
     }
 }
@@ -319,7 +316,6 @@ body{
           background-color: #93939378;
         }
         & img{
-          // width: 60px;
           height: 100%;
         }
     }
@@ -333,7 +329,6 @@ body{
 }
 .highlight{
   background-color: #acacacc3;
-  // color: black;
 }
 .correct{
   color: green;
