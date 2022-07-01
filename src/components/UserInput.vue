@@ -24,7 +24,6 @@ export default {
       this.enteredValue = ''
     },
     keyPressed(e){
-      console.log(e)
       if (e.key === 'Backspace'){
         this.$emit('backspace-pressed', this.enteredValue)
       } else if (e.code === 'MetaLeft'){
