@@ -1,6 +1,6 @@
 <template>
   <li>
-    <span :class="isCurrentCorrect">{{ word }}</span>
+    <span class="word" :class="isCurrentCorrect">{{ word }}</span>
   </li>
 </template>
 

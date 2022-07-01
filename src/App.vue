@@ -25,7 +25,7 @@
       @cmd-backspace="removeWholeWord"
       @enter-pressed="enterPressed"
       ></user-input>
-      <show-timer :timer-counter="timerCounter"></show-timer>
+      <show-timer :timer-counter="timerCounter" :timer-vissible="timerVissible" @toggle-timer="toggleTimer"></show-timer>
       <button class="input-bar__restart" @click="restartGame" v-if="gameStarted"><img src="./assets/restart.png" alt="restart"></button>
     </input-bar>
   </div>
@@ -56,6 +56,7 @@ export default {
   },
   data(){
     return {
+      timerVissible: true,
       gameStarted: false,
       restart: false,
       timerCounter: 60,
@@ -179,6 +180,9 @@ export default {
       this.intervalId = []
       this.wordsInfo = this.randomWords(this.words)
     },
+    toggleTimer(){
+      this.timerVissible = !this.timerVissible
+    },
     randomWords(str){
       str = [...str]
         const wordsInfo = []
@@ -240,8 +244,8 @@ body{
   // padding: 20px 40px;
   font-size: 1.7em;
   // backdrop-filter: blur(10px);
-  border-radius: 15px;
-  transition-duration: 0.3s;
+  border-radius: 4px;
+  transition-duration: 0.2s;
     &:hover{
       transform: scale(1.05);
       // border-radius: 20px;
@@ -284,16 +288,18 @@ body{
       outline: none;
     }
     &__timer{
+      padding: 10px;
       width: 60px;
       height: 100%;
       background-color: #939393b1;
       color: white;
-      font-size: 0.9em;
+      font-size: 1.5em;
       margin-left: 10px;
       display: flex;
       justify-content: center;
       align-items: center;
       border-radius: 4px;
+      cursor: pointer;
     }
     &__restart{
       width: 60px;
@@ -306,14 +312,20 @@ body{
       display: flex;
       justify-content: center;
       align-items: center;
+      padding: 10px;
+      cursor: pointer;
+      transition-duration: 0.2s;
+        &:hover{
+          background-color: #93939378;
+        }
         & img{
-          width: 30px;
-          height: 30px;
+          // width: 60px;
+          height: 100%;
         }
     }
 }
 
-span{
+.word{
   display: inline-block;
   font-size: 1.8em;
   padding: 5px 7px;
