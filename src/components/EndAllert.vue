@@ -24,7 +24,11 @@ export default {
   props: ['words', 'correctWords', 'wrongWords', 'correctLetters', 'wrongLetters'],
   computed: {
     calcWPM(){
-      return this.wrongWords%2===0 ?this.correctWords + (this.wrongWords/2) : this.correctWords + ((this.wrongWords/2) - 0.5)
+      if (this.wrongWords === 0){
+        return this.correctWords%10 === 0 ? this.correctWords + (this.correctWords / 10) : Math.round(this.correctWords + (this.correctWords/10))
+      } else {
+        return this.wrongWords%2===0 ?this.correctWords + (this.wrongWords/2) : this.correctWords + ((this.wrongWords/2) - 0.5)
+      }
     },
     calcLetters(){
       return this.correctLetters + this.wrongLetters

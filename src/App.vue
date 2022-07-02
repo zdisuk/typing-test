@@ -1,5 +1,5 @@
 <template>
-  <button class="start" @click="startGame" v-if="gameStarted===false">Start Game</button>
+  <button class="start" @click="startGame" v-if="gameStarted===false">Start Test</button>
   <div class="area" v-show="gameStarted">
     <ul class="area__words" v-if="wordsVisible">
       <current-word
@@ -297,6 +297,10 @@ body{
       align-items: center;
       border-radius: 4px;
       cursor: pointer;
+      transition-duration: 0.2s;
+        &:hover{
+          background-color: #93939378;
+        }
     }
     &__restart{
       width: 60px;
