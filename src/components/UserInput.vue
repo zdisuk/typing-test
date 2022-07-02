@@ -4,6 +4,7 @@
   v-model="enteredValue" 
   @keyup.space="spaceArePressed" 
   @keyup="keyPressed" 
+  @keypress="keyArePressed"
   :disabled="end"
   ref="inputFocus"
   >
@@ -32,10 +33,11 @@ export default {
         this.$emit('shift-pressed')
       } else if (e.key === 'Enter' || e.key === 'Tab'){
         this.$emit('enter-pressed')
-      } else {
-        this.$emit('key-pressed', e, this.enteredValue) 
       }
     },
+    keyArePressed(e){
+      this.$emit('key-pressed', e)
+    }
   },
   watch: {
     letter(v){

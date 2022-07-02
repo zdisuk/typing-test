@@ -119,16 +119,15 @@ export default {
         this.counter++
       }
       this.wordsInfo[this.counter].isCorrect = 'highlight'
-      this.letter = -1
+      this.letter = 0
     },
-    keyPressed(event, enteredValue){
+    keyPressed(event){
       this.letterCount++
       const wordArr = this.wordsInfo[this.counter].word.split('')
-      const inputSplit = enteredValue.split('')
-      if ((inputSplit[this.letter] !== wordArr[this.letter]) && event.key !== ' ' && (event.key !== 'Enter' || event.key !== 'Tab')){
+      if ((event.key !== wordArr[this.letter]) && event.key !== ' ' && (event.key !== 'Enter' || event.key !== 'Tab')){
           this.wordsInfo[this.counter].isCorrect = 'wrong-letter'
           this.wrongLetters++
-      } else if ((inputSplit[this.letter] === wordArr[this.letter] || event.key === ' ' || event.key === 'Enter' || event.key === 'Tab') && this.wordsInfo[this.counter].isCorrect !== 'wrong-letter'){
+      } else if ((event.key === wordArr[this.letter] || event.key === ' ' || event.key === 'Enter' || event.key === 'Tab') && this.wordsInfo[this.counter].isCorrect !== 'wrong-letter'){
         this.wordsInfo[this.counter].isCorrect = 'highlight'
         this.correctLetters++
       }
