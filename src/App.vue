@@ -30,10 +30,9 @@
       :timer-vissible="timerVissible" 
       @toggle-timer="toggleTimer"
       ></show-timer>
-      <button 
-      class="input-bar__restart" 
-      @click="restartGame" 
-      ><img src="./assets/restart.png" alt="restart"></button>
+      <restart-button @restart-game="restartGame">
+        <img src="./assets/restart.png" alt="restart">
+      </restart-button>
     </input-bar>
   </div>
   <end-allert 
@@ -52,6 +51,7 @@ import CurrentWord from './components/CurrentWord.vue'
 import EndAllert from './components/EndAllert.vue'
 import ShowTimer from './components/ShowTimer.vue'
 import InputBar from './components/InputBar.vue'
+import RestartButton from './components/RestartButton.vue'
 
 export default {
   components: {
@@ -60,6 +60,7 @@ export default {
     EndAllert,
     ShowTimer,
     InputBar,
+    RestartButton,
   },
   data(){
     return {
