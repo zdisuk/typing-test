@@ -1,7 +1,5 @@
 <template>
-  <li>
-    <span class="word" :class="isCurrentCorrect">{{ word }}</span>
-  </li>
+    <span class="words__word" :class="isCurrentCorrect">{{ word }}</span>
 </template>
 
 <script>

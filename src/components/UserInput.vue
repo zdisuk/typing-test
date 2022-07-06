@@ -57,7 +57,10 @@ export default {
     },
     restart(v){
       if(v===true || v===false){
-        this.$refs.inputFocus.focus()
+        const that = this
+        setTimeout(() => {
+          that.$refs.inputFocus.focus()
+        }, 100)
       }
     }
   }

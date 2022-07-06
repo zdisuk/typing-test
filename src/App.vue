@@ -1,7 +1,7 @@
 <template>
   <button class="start" @click="startGame" v-if="gameStarted===false">Start Test</button>
   <div class="area" v-show="gameStarted">
-    <ul class="area__words" v-if="wordsVisible">
+    <div class="words" v-if="wordsVisible">
       <current-word
       v-for="(item, index) in wordsInfo"
       :key="index"
@@ -10,7 +10,7 @@
       :word='item.word'
       :is-correct="item.isCorrect"
       ></current-word>
-    </ul>
+    </div>
     <input-bar>
       <user-input
       :counter="counter" 
@@ -255,21 +255,25 @@ body{
   justify-content: center;
   align-items: center;
   width: 800px;
-    &__words{
-      color: #111111;
-      margin: 0;
-      padding: 10px 20px;
-      width: 100%;
-      height: fit-content;
-      overflow: hidden;
-      margin-bottom: 30px;
-      list-style: none;
-      display: flex;
-      flex-wrap: wrap;
-      background-color: rgba(255, 255, 255, 0.907);
-      backdrop-filter: blur(5px);
-      border-radius: 4px;
-    }
+}
+.words{
+  color: #111111;
+  margin: 0;
+  padding: 10px 20px;
+  width: 100%;
+  height: fit-content;
+  overflow: hidden;
+  margin-bottom: 30px;
+  list-style: none;
+  background-color: rgba(255, 255, 255, 0.907);
+  backdrop-filter: blur(5px);
+  border-radius: 4px;
+    &__word{
+    display: inline-block;
+    font-size: 1.8em;
+    padding: 5px 7px;
+    border-radius: 5px;
+  }
 }
 .input-bar{
     &__input{
@@ -322,13 +326,6 @@ body{
           height: 100%;
         }
     }
-}
-
-.word{
-  display: inline-block;
-  font-size: 1.8em;
-  padding: 5px 7px;
-  border-radius: 5px;
 }
 .highlight{
   background-color: #acacacc3;
