@@ -65,6 +65,7 @@ export default {
   margin-top: 30px;
   font-family: sans-serif;
   border-radius: 4px;
+  font-size: 1em;
 }
 .header {
   background: rgba(35, 35, 35, 0.825);
@@ -79,7 +80,7 @@ export default {
   justify-content: center;
   align-items: center;
 		&__title {
-      color: rgba(35, 35, 35, 0.825);
+      color: #232323d2;
       font-size: 2.2em;
       font-weight: bold;
 		}
@@ -110,7 +111,7 @@ export default {
 .accuracy {
     padding: 10px 20px;
 		&__title {
-      color: rgba(35, 35, 35, 0.825);
+      color: #232323d2;
       display: flex;
       justify-content: space-between;
 		}

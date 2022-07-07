@@ -1,7 +1,7 @@
 <template>
-  <button class="input-bar__restart" @click="$emit('restart-game')">
+  <button class="input-bar__buttons" @click="$emit('restart-game')">
     <slot>
-      
+
     </slot>
   </button>
 </template>

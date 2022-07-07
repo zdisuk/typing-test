@@ -1,5 +1,5 @@
 <template>
-  <div class = 'input-bar__timer' @click="toggleTimer">
+  <div class = 'input-bar__buttons input-bar__timer' @click="toggleTimer">
     <span v-if="timerVissible">{{ secondsToMinutes }}:{{ milisecondsToSeconds }}</span>
   </div>
 </template>
