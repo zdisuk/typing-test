@@ -23,9 +23,8 @@
       @space-pressed="specePressed" 
       @key-pressed="keyPressed" 
       @backspace-pressed="backspacePressed" 
-      @cmd-backspace="removeWholeWord"
-      @shift-pressed="shiftPressed" 
       @enter-pressed="enterPressed"
+      @clear-input="clearInput"
       ></user-input>
       <show-timer 
       :timer-counter="timerCounter" 
@@ -72,8 +71,6 @@ export default {
   },
   data(){
     return {
-      column: 0,
-      row: 0,
       settingsAreVissible: false,
       timerVissible: true,
       gameStarted: false,
@@ -112,19 +109,12 @@ export default {
         }
       }
     },
-    column(value){
-      if (value === 50){
-        this.column = 0
-        this.row++
-      }
-    }
   },
   methods: {
     specePressed(enteredInput){
       enteredInput = enteredInput.split('')
-      enteredInput.pop()
       if (enteredInput.length === 0){
-        this.wordsInfo[this.counter].isCorrect = 'correct'
+        this.wordsInfo[this.counter].isCorrect = 'highlight'
       } else if (enteredInput.join('') === this.wordsInfo[this.counter].word){
         this.wordsInfo[this.counter].isCorrect = 'correct'
         this.wordsCount++
@@ -140,15 +130,13 @@ export default {
       this.letter = 0
     },
     keyPressed(event){
-      this.letterCount++
       const wordArr = this.wordsInfo[this.counter].word.split('')
-      if ((event.key !== wordArr[this.letter]) && event.key !== ' ' && (event.key !== 'Enter' || event.key !== 'Tab')){
+      if ((event.key !== wordArr[this.letter]) && event.key !== ' ' && event.key !== 'Enter'){
         this.wordsInfo[this.counter].isCorrect = 'wrong-letter'
           this.wrongLetters++
-      } else if ((event.key === wordArr[this.letter] || event.key === ' ' || event.key === 'Enter' || event.key === 'Tab') && this.wordsInfo[this.counter].isCorrect !== 'wrong-letter'){
+      } else if (event.key === wordArr[this.letter] && this.wordsInfo[this.counter].isCorrect !== 'wrong-letter'){
         this.wordsInfo[this.counter].isCorrect = 'highlight'
         this.correctLetters++
-        this.column++
       }
       this.letter++
     },
@@ -165,15 +153,20 @@ export default {
       }
       // this.letter--
     },
-    removeWholeWord(){
-      this.letter = 0
-      this.wordsInfo[this.counter].isCorrect = 'highlight'
-    },
+    // removeWholeWord(){
+    //   this.letter = 0
+    //   this.wordsInfo[this.counter].isCorrect = 'highlight'
+    // },
     // shiftPressed(){
     //   this.letter = this.letter
     // },
     enterPressed(){
-      this.wordsInfo[this.counter].isCorrect = 'highlight'
+      if (this.wordsInfo[this.counter].isCorrect !== 'wrong-letter'){
+        this.wordsInfo[this.counter].isCorrect = 'highlight'
+      }
+      if (this.letter > 0){
+        this.letter--
+      }
     },
     startGame(){
       this.gameStarted = true
@@ -192,8 +185,6 @@ export default {
       this.correctLetters = 0
       this.wrongLetters = 0
       this.timerCounter = 60
-      this.column = 0
-      this.row = 0
       clearTimeout(this.timerId[0])
       clearInterval(this.intervalId[0])
       this.timerId = []
@@ -223,6 +214,10 @@ export default {
       }
       wordsInfo[0].isCorrect = 'highlight'
       return wordsInfo
+    },
+    clearInput(){
+      this.letter = 0
+      this.wordsInfo[this.counter].isCorrect = 'highlight'
     }
   },
 }
@@ -236,6 +231,7 @@ export default {
 }
 body{
   width: 100%;
+  min-height: 100vh;
   height: 100%;
   display: flex;
   flex-direction: column;
@@ -247,7 +243,7 @@ body{
   background-image: url('./assets/background.jpeg');
   background-repeat: no-repeat;
   background-size: 100vw;
-  // backdrop-filter: blur(5px);
+  backdrop-filter: blur(5px);
 }
 #app{
   display: flex;
@@ -256,7 +252,7 @@ body{
   align-items: center;
   width: 100%;
   height: 100%;
-  backdrop-filter: blur(5px);
+  // backdrop-filter: blur(5px);
 }
 .start-window{
   width: 100vw;
@@ -282,7 +278,6 @@ body{
     }
 }
 .wrapper{
-  padding: 60px 0 0 0;
   display: flex;
   flex-direction: column;
   justify-content: center;

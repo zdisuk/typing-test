@@ -12,7 +12,7 @@
 
 <script>
 export default {
-  emits: ['space-pressed', 'key-pressed', 'backspace-pressed', 'cmd-backspace', 'shift-pressed', 'enter-pressed'],
+  emits: ['space-pressed', 'key-pressed', 'backspace-pressed', 'enter-pressed', 'clear-input'],
   props: ['counter', 'letter', 'end', 'started', 'restart'],
   data(){
     return {
@@ -21,22 +21,18 @@ export default {
   },
   methods: {
     spaceArePressed(){
-      this.$emit('space-pressed', this.enteredValue)
+      this.$emit('space-pressed', this.enteredValue.trim())
       this.enteredValue = ''
     },
     keyPressed(e){
       if (e.key === 'Backspace'){
         this.$emit('backspace-pressed', this.enteredValue)
-      } else if (e.code === 'MetaLeft'){
-        this.$emit('cmd-backspace')
-      } else if (e.key === 'Shift'){
-        this.$emit('shift-pressed')
-      } else if (e.key === 'Enter' || e.key === 'Tab'){
+      } else if (e.key === 'Enter'){
         this.$emit('enter-pressed')
       }
     },
     keyArePressed(e){
-      this.$emit('key-pressed', e)
+      this.$emit('key-pressed', e, this.enteredValue)
     }
   },
   watch: {
@@ -61,6 +57,11 @@ export default {
         setTimeout(() => {
           that.$refs.inputFocus.focus()
         }, 100)
+      }
+    },
+    enteredValue(){
+      if (this.enteredValue === ''){
+        this.$emit('clear-input')
       }
     }
   }
