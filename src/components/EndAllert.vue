@@ -38,6 +38,9 @@ export default {
         return 100
       } else {
         let res = 100 - ((this.wrongLetters*100)/(this.correctLetters+this.wrongLetters))
+        if (res % 2 === 0){
+          return res
+        }
         res = res.toString()
         res = [...res]
         for (let i = 0; i < res.length; i++){
@@ -61,7 +64,6 @@ export default {
   width: 100%;
   max-width: 300px;
   background-color: #939393eb;
-  // backdrop-filter: blur(3px);
   margin-top: 30px;
   font-family: sans-serif;
   border-radius: 4px;

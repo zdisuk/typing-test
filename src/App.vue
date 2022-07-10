@@ -151,15 +151,7 @@ export default {
       if (wordArr.join('') === enteredValueArr.join('') || enteredValueArr.length === 0){
         this.wordsInfo[this.counter].isCorrect = 'highlight'
       }
-      // this.letter--
     },
-    // removeWholeWord(){
-    //   this.letter = 0
-    //   this.wordsInfo[this.counter].isCorrect = 'highlight'
-    // },
-    // shiftPressed(){
-    //   this.letter = this.letter
-    // },
     enterPressed(){
       if (this.wordsInfo[this.counter].isCorrect !== 'wrong-letter'){
         this.wordsInfo[this.counter].isCorrect = 'highlight'
@@ -252,7 +244,6 @@ body{
   align-items: center;
   width: 100%;
   height: 100%;
-  // backdrop-filter: blur(5px);
 }
 .start-window{
   width: 100vw;

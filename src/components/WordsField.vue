@@ -30,7 +30,6 @@ export default {
   margin-top: 20px;
   background-color: #939393eb;
   color: #232323d2;
-  // padding: 10px 10px;
   width: 75%;
   border-radius: 4px;
   font-family: sans-serif;
