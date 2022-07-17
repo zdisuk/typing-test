@@ -1,6 +1,13 @@
 <template>
   <div class="words-field">
     <h2 class="words-field__header">Settings</h2>
+    <select id="timer" v-model="timerValue">
+      <option value="half">00:30</option>
+      <option value="one">01:00</option>
+      <option value="two">02:00</option>
+      <option value="five">05:00</option>
+      <option value="ten">10:00</option>
+    </select>
     <p class="words-field__note">
       If you want to add a word, separate each word with "Space"
     </p>
@@ -13,11 +20,11 @@
 
 <script>
 export default {
-  props: ["words"],
+  props: ["words", "timerValue"],
   emits: ["submit-words"],
   methods: {
     setWords() {
-      this.$emit("submit-words", this.words);
+      this.$emit("submit-words", this.words, this.timerValue);
     },
   },
 };
@@ -59,7 +66,7 @@ export default {
     &:hover {
       background-color: #2323237d;
     }
-    &:focus{
+    &:focus {
       background-color: #2323237d;
     }
   }

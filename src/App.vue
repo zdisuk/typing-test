@@ -27,7 +27,7 @@
         @clear-input="clearInput"
       ></user-input>
       <show-timer
-        :timer-counter="timerCounter"
+        :timer-counter="timerSeconds"
         :timer-vissible="timerVissible"
         @toggle-timer="toggleTimer"
       ></show-timer>
@@ -41,6 +41,7 @@
     <words-field
       v-show="settingsAreVissible"
       :words="words"
+      :timer-value="timerValue"
       @submit-words="submitWords"
     ></words-field>
     <end-allert
@@ -77,11 +78,12 @@ export default {
   },
   data() {
     return {
+      timerValue: "one",
       settingsAreVissible: false,
       timerVissible: true,
       gameStarted: false,
       restart: false,
-      timerCounter: 60,
+      timerSeconds: 60,
       intervalId: [],
       timerId: [],
       correctLetters: 0,
@@ -107,7 +109,7 @@ export default {
         if (that.intervalId.length < 1 && that.timerId.length < 1) {
           that.intervalId.push(
             setInterval(() => {
-              that.timerCounter--;
+              this.timerSeconds--
             }, 1000)
           );
           that.timerId.push(
@@ -115,11 +117,25 @@ export default {
               that.end = true;
               that.wordsVisible = false;
               clearInterval(that.intervalId[0]);
-              that.timerCounter = 0;
-            }, 60000)
+              that.timerSeconds = 0;
+            }, this.timerSeconds * 1000)
           );
         }
       }
+    },
+  },
+
+  computed: {
+    calcSeconds() {
+      return this.timerValue === "half"
+        ? 30
+        : this.timerValue === "one"
+        ? 60
+        : this.timerValue === "two"
+        ? 120
+        : this.timerValue === "five"
+        ? 300
+        : 600;
     },
   },
 
@@ -140,9 +156,9 @@ export default {
         this.counter++;
       }
 
-      if (this.counter > 119){
-        this.wordsInfo.splice(0, 120)
-        this.counter = this.counter - 120
+      if (this.counter > 119) {
+        this.wordsInfo.splice(0, 120);
+        this.counter = this.counter - 120;
       }
 
       this.wordsInfo[this.counter].isCorrect = "highlight";
@@ -205,7 +221,7 @@ export default {
       this.wrongWords = 0;
       this.correctLetters = 0;
       this.wrongLetters = 0;
-      this.timerCounter = 60;
+      this.timerSeconds = this.calcSeconds
       clearTimeout(this.timerId[0]);
       clearInterval(this.intervalId[0]);
       this.timerId = [];
@@ -219,17 +235,20 @@ export default {
     setWords() {
       this.settingsAreVissible = !this.settingsAreVissible;
     },
-    submitWords(w) {
+    submitWords(w, seconds) {
       this.words = w;
       this.wordsInfo = this.randomWords(w);
       this.settingsAreVissible = !this.settingsAreVissible;
+      this.timerValue = seconds
+      this.timerSeconds = this.calcSeconds;
     },
     toggleTimer() {
       this.timerVissible = !this.timerVissible;
     },
-    randomWords(str) {
+    randomWords(str, seconds) {
       const wordsInfo = [];
       str = str.split(" ");
+      // if (seconds === )
       for (let i = 0; i < 200; i++) {
         wordsInfo.push({
           word: str[Math.floor(Math.random() * str.length)],
