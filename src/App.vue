@@ -109,7 +109,7 @@ export default {
         if (that.intervalId.length < 1 && that.timerId.length < 1) {
           that.intervalId.push(
             setInterval(() => {
-              this.timerSeconds--
+              this.timerSeconds--;
             }, 1000)
           );
           that.timerId.push(
@@ -123,6 +123,13 @@ export default {
         }
       }
     },
+    counter(){
+      if (this.counter > 99) {
+        this.wordsInfo = [ ...this.wordsInfo, ...this.randomWords(this.words) ]
+        this.wordsInfo.splice(0, 100);
+        this.counter = this.counter - 100;
+      }
+    }
   },
 
   computed: {
@@ -154,11 +161,6 @@ export default {
         this.wrongWords++;
         this.wordsCount++;
         this.counter++;
-      }
-
-      if (this.counter > 119) {
-        this.wordsInfo.splice(0, 120);
-        this.counter = this.counter - 120;
       }
 
       this.wordsInfo[this.counter].isCorrect = "highlight";
@@ -221,7 +223,7 @@ export default {
       this.wrongWords = 0;
       this.correctLetters = 0;
       this.wrongLetters = 0;
-      this.timerSeconds = this.calcSeconds
+      this.timerSeconds = this.calcSeconds;
       clearTimeout(this.timerId[0]);
       clearInterval(this.intervalId[0]);
       this.timerId = [];
@@ -237,19 +239,18 @@ export default {
     },
     submitWords(w, seconds) {
       this.words = w;
-      this.wordsInfo = this.randomWords(w);
       this.settingsAreVissible = !this.settingsAreVissible;
-      this.timerValue = seconds
+      this.timerValue = seconds;
       this.timerSeconds = this.calcSeconds;
+      this.wordsInfo = this.randomWords(this.words);
     },
     toggleTimer() {
       this.timerVissible = !this.timerVissible;
     },
-    randomWords(str, seconds) {
+    randomWords(str) {
       const wordsInfo = [];
       str = str.split(" ");
-      // if (seconds === )
-      for (let i = 0; i < 200; i++) {
+      for (let i = 0; i < 130; i++) {
         wordsInfo.push({
           word: str[Math.floor(Math.random() * str.length)],
           isCorrect: "",
@@ -334,7 +335,7 @@ body {
   padding: 10px 20px;
   width: 100%;
   height: fit-content;
-  max-height: 510px;
+  max-height: 410px;
   overflow: hidden;
   margin-bottom: 30px;
   background-color: rgba(255, 255, 255, 0.907);
