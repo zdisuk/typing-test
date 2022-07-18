@@ -239,6 +239,7 @@ export default {
       this.settingsAreVissible = !this.settingsAreVissible;
     },
     submitWords(w, seconds) {
+      this.restartGame()
       this.words = w;
       this.settingsAreVissible = !this.settingsAreVissible;
       this.timerValue = seconds;
