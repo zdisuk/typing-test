@@ -21,26 +21,53 @@
 
 <script>
 export default {
-  props: ['words', 'correctWords', 'wrongWords', 'correctLetters', 'wrongLetters'],
+  props: ['words', 'correctWords', 'wrongWords', 'correctLetters', 'wrongLetters', 'timerSeconds'],
   computed: {
     calcWPM(){
-      if (this.wrongWords === 0){
-        return this.correctWords%10 === 0 ? this.correctWords + (this.correctWords / 10) : Math.round(this.correctWords + (this.correctWords/10))
-      } else {
-        return this.wrongWords%2===0 ?this.correctWords + (this.wrongWords/2) : this.correctWords + ((this.wrongWords/2) - 0.5)
+      if (this.timerSeconds === "half"){
+        if (this.wrongWords === 0){
+          return this.correctWords%10 === 0 ? (this.correctWords + (this.correctWords / 10)) * 2 : (Math.round(this.correctWords + (this.correctWords/10))) * 2
+        } else {
+          return this.wrongWords%2===0 ? (this.correctWords + (this.wrongWords/2)) * 2 : (this.correctWords + ((this.wrongWords/2) - 0.5)) * 2
+        }
+      } else if (this.timerSeconds === "one"){
+        if (this.wrongWords === 0){
+          return this.correctWords%10 === 0 ? this.correctWords + (this.correctWords / 10) : Math.round(this.correctWords + (this.correctWords/10))
+        } else {
+          return this.wrongWords%2===0 ? this.correctWords + (this.wrongWords/2) : this.correctWords + ((this.wrongWords/2) - 0.5)
+        }
+      } else if (this.timerSeconds === "two"){
+        if (this.wrongWords === 0){
+          return this.correctWords%10 === 0 ? (this.correctWords + (this.correctWords / 10)) / 2 : (Math.round(this.correctWords + (this.correctWords/10))) / 2
+        } else {
+          return this.wrongWords%2===0 ? (this.correctWords + (this.wrongWords/2)) / 2 : (this.correctWords + ((this.wrongWords/2) - 0.5)) / 2
+        }
+      } else if (this.timerSeconds === "five"){
+        if (this.wrongWords === 0){
+          return this.correctWords%10 === 0 ? (this.correctWords + (this.correctWords / 10)) / 5 : (Math.round(this.correctWords + (this.correctWords/10))) / 5
+        } else {
+          return this.wrongWords%2===0 ? (this.correctWords + (this.wrongWords/2)) / 5 : (this.correctWords + ((this.wrongWords/2) - 0.5)) / 5
+        }
+      } else if (this.timerSeconds === "ten"){
+        if (this.wrongWords === 0){
+          return this.correctWords%10 === 0 ? (this.correctWords + (this.correctWords / 10)) / 10 : (Math.round(this.correctWords + (this.correctWords/10))) / 10
+        } else {
+          return this.wrongWords%2===0 ? (this.correctWords + (this.wrongWords/2)) / 10 : (this.correctWords + ((this.wrongWords/2) - 0.5)) / 10
+        }
       }
     },
+
     calcLetters(){
       return this.correctLetters + this.wrongLetters
     },
+
     calcAccuracy(){
+      let res = 100 - ((this.wrongLetters*100)/(this.correctLetters+this.wrongLetters))
       if (this.wrongLetters === 0){
         return 100
+      } else if (this.calcLetters % 2 === 0 && res % 2 === 0){
+        return res
       } else {
-        let res = 100 - ((this.wrongLetters*100)/(this.correctLetters+this.wrongLetters))
-        if (res % 2 === 0){
-          return res
-        }
         res = res.toString()
         res = [...res]
         for (let i = 0; i < res.length; i++){

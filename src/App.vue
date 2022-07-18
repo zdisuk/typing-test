@@ -51,6 +51,7 @@
       :wrong-words="wrongWords"
       :correct-letters="correctLetters"
       :wrong-letters="wrongLetters"
+      :timer-seconds="timerValue"
     ></end-allert>
   </div>
 </template>
@@ -250,7 +251,7 @@ export default {
     randomWords(str) {
       const wordsInfo = [];
       str = str.split(" ");
-      for (let i = 0; i < 130; i++) {
+      for (let i = 0; i < 120; i++) {
         wordsInfo.push({
           word: str[Math.floor(Math.random() * str.length)],
           isCorrect: "",
