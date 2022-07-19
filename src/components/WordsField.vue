@@ -1,12 +1,12 @@
 <template>
   <div class="words-field">
     <h2 class="words-field__header">Settings</h2>
-    <select id="timer" v-model="timerValue">
-      <option value="half">00:30</option>
-      <option value="one">01:00</option>
-      <option value="two">02:00</option>
-      <option value="five">05:00</option>
-      <option value="ten">10:00</option>
+    <select class="words-field__dropdown" v-model="timerValue">
+      <option value="half">30s</option>
+      <option value="one">1min</option>
+      <option value="two">2min</option>
+      <option value="five">5min</option>
+      <option value="ten">10min</option>
     </select>
     <p class="words-field__note">
       If you want to add a word, separate each word with "Space"
@@ -49,20 +49,35 @@ export default {
     font-size: 1em;
     width: 100%;
   }
+  &__dropdown{
+    margin: 10px 0;
+    padding: 5px 3px;
+    border-radius: 4px;
+    background: rgba(35, 35, 35, 0.8235294118);
+    color: white;
+    outline: 1px solid gray;
+      &:focus{
+        outline: 1px solid #ffffffc8;
+      }
+  }
   &__note {
-    padding: 15px 10px 10px 10px;
+    padding: 10px 0 15px 0;
+    font-size: 1.2em;
   }
   &__area {
-    width: 85%;
+    width: 87%;
     height: 150px;
     background-color: rgba(255, 255, 255, 0.5921568627);
     padding: 5px 10px;
     border-radius: 4px;
+    font-size: 1em;
   }
   &__button {
-    margin: 10px 0;
-    background-color: #232323d2;
+    margin: 25px 0 10px 0;
+    width: 150px;
+    background-color: rgba(35, 35, 35, 0.8235294118);
     color: white;
+    font-size: 1em;
     &:hover {
       background-color: #2323237d;
     }
@@ -70,5 +85,6 @@ export default {
       background-color: #2323237d;
     }
   }
+
 }
 </style>
