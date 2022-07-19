@@ -165,6 +165,9 @@ export default {
         this.wordsCount++;
         this.counter++;
       }
+      if (enteredInput.length !== 0){
+        this.correctLetters++
+      }
 
       this.wordsInfo[this.counter].isCorrect = "highlight";
       this.letter = 0;
