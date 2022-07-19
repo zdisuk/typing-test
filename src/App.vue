@@ -135,7 +135,9 @@ export default {
 
   computed: {
     calcSeconds() {
-      return this.timerValue === "half"
+      return this.timerValue === "quarter"
+        ? 15
+        : this.timerValue === "half"
         ? 30
         : this.timerValue === "one"
         ? 60

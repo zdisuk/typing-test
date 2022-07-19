@@ -24,7 +24,13 @@ export default {
   props: ['words', 'correctWords', 'wrongWords', 'correctLetters', 'wrongLetters', 'timerSeconds'],
   computed: {
     calcWPM(){
-      if (this.timerSeconds === "half"){
+      if (this.timerSeconds === "quarter"){
+        if (this.wrongWords === 0){
+          return this.correctWords%10 === 0 ? (this.correctWords + (this.correctWords / 10)) * 4 : (Math.round(this.correctWords + (this.correctWords/10))) * 4
+        } else {
+          return this.wrongWords%2===0 ? Math.round(this.correctWords + (this.wrongWords/2)) * 4 : Math.round(this.correctWords + Math.round(this.wrongWords/2)) * 4
+        }
+      } else if (this.timerSeconds === "half"){
         if (this.wrongWords === 0){
           return this.correctWords%10 === 0 ? (this.correctWords + (this.correctWords / 10)) * 2 : (Math.round(this.correctWords + (this.correctWords/10))) * 2
         } else {

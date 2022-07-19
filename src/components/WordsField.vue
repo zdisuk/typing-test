@@ -2,6 +2,7 @@
   <div class="words-field">
     <h2 class="words-field__header">Settings</h2>
     <select class="words-field__dropdown" v-model="timerValue">
+      <option value="quarter">15s</option>
       <option value="half">30s</option>
       <option value="one">1min</option>
       <option value="two">2min</option>
