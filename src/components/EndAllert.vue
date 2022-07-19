@@ -28,31 +28,31 @@ export default {
         if (this.wrongWords === 0){
           return this.correctWords%10 === 0 ? (this.correctWords + (this.correctWords / 10)) * 2 : (Math.round(this.correctWords + (this.correctWords/10))) * 2
         } else {
-          return this.wrongWords%2===0 ? (this.correctWords + (this.wrongWords/2)) * 2 : (this.correctWords + ((this.wrongWords/2) - 0.5)) * 2
+          return this.wrongWords%2===0 ? Math.round(this.correctWords + (this.wrongWords/2)) * 2 : Math.round(this.correctWords + Math.round(this.wrongWords/2)) * 2
         }
       } else if (this.timerSeconds === "one"){
         if (this.wrongWords === 0){
           return this.correctWords%10 === 0 ? this.correctWords + (this.correctWords / 10) : Math.round(this.correctWords + (this.correctWords/10))
         } else {
-          return this.wrongWords%2===0 ? this.correctWords + (this.wrongWords/2) : this.correctWords + ((this.wrongWords/2) - 0.5)
+          return this.wrongWords%2===0 ? this.correctWords + (this.wrongWords/2) : this.correctWords + (Math.round(this.wrongWords/2))
         }
       } else if (this.timerSeconds === "two"){
         if (this.wrongWords === 0){
           return this.correctWords%10 === 0 ? (this.correctWords + (this.correctWords / 10)) / 2 : (Math.round(this.correctWords + (this.correctWords/10))) / 2
         } else {
-          return this.wrongWords%2===0 ? (this.correctWords + (this.wrongWords/2)) / 2 : (this.correctWords + ((this.wrongWords/2) - 0.5)) / 2
+          return this.wrongWords%2===0 ? Math.round(this.correctWords + (this.wrongWords/2)) / 2 : Math.round(this.correctWords + Math.round(this.wrongWords/2)) / 2
         }
       } else if (this.timerSeconds === "five"){
         if (this.wrongWords === 0){
           return this.correctWords%10 === 0 ? (this.correctWords + (this.correctWords / 10)) / 5 : (Math.round(this.correctWords + (this.correctWords/10))) / 5
         } else {
-          return this.wrongWords%2===0 ? (this.correctWords + (this.wrongWords/2)) / 5 : (this.correctWords + ((this.wrongWords/2) - 0.5)) / 5
+          return this.wrongWords%2===0 ? Math.round(this.correctWords + (this.wrongWords/2)) / 5 : Math.round(this.correctWords + Math.round(this.wrongWords/2)) / 5
         }
       } else if (this.timerSeconds === "ten"){
         if (this.wrongWords === 0){
           return this.correctWords%10 === 0 ? (this.correctWords + (this.correctWords / 10)) / 10 : (Math.round(this.correctWords + (this.correctWords/10))) / 10
         } else {
-          return this.wrongWords%2===0 ? (this.correctWords + (this.wrongWords/2)) / 10 : (this.correctWords + ((this.wrongWords/2) - 0.5)) / 10
+          return this.wrongWords%2===0 ? Math.round(this.correctWords + (this.wrongWords/2)) / 10 : Math.round(this.correctWords + Math.round(this.wrongWords/2)) / 10
         }
       }
     },
