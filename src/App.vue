@@ -1,7 +1,5 @@
 <template>
-  <div class="start-window" v-if="gameStarted === false">
-    <button class="start-window__button" @click="startGame">Start Test</button>
-  </div>
+  <start-window v-if="!gameStarted" @game-started="startGame"></start-window>
   <div class="wrapper" v-show="gameStarted">
     <div class="words" v-if="wordsVisible">
       <current-word
@@ -57,6 +55,7 @@
 </template>
 
 <script>
+import StartWindow from "./components/StartWindow.vue"
 import UserInput from "./components/UserInput.vue";
 import CurrentWord from "./components/CurrentWord.vue";
 import EndAllert from "./components/EndAllert.vue";
@@ -68,6 +67,7 @@ import WordsField from "./components/WordsField.vue";
 
 export default {
   components: {
+    StartWindow,
     UserInput,
     CurrentWord,
     EndAllert,
@@ -304,29 +304,6 @@ body {
   align-items: center;
   width: 100%;
   height: 100%;
-}
-.start-window {
-  width: 100vw;
-  height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  &__button {
-    background-color: #939393b1;
-    border: none;
-    color: rgb(255, 255, 255);
-    font-weight: normal;
-    width: 200px;
-    height: 60px;
-    font-size: 1.7em;
-    border-radius: 4px;
-    transition-duration: 0.2s;
-    &:hover {
-      transform: scale(1.05);
-      background-color: #5b5b5be2;
-      cursor: pointer;
-    }
-  }
 }
 .wrapper {
   display: flex;
