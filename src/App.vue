@@ -104,6 +104,7 @@ export default {
 
   watch: {
     letter(value) {
+      this.settingsAreVissible = false
       if (value === 1 && this.counter === 0) {
         this.restart = false;
         const that = this;
