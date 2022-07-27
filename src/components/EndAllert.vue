@@ -96,7 +96,7 @@ export default {
   color: white;
   width: 100%;
   max-width: 300px;
-  background-color: #939393eb;
+  background: #939393eb;
   margin-top: 30px;
   font-family: sans-serif;
   border-radius: 4px;
@@ -105,6 +105,8 @@ export default {
 .header {
   background: rgba(35, 35, 35, 0.825);
   padding: 5px 15px;
+  border-top-right-radius: 4px;
+  border-top-left-radius: 4px;
 		&__text {
       font-size: 1.2em;
 		}
