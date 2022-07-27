@@ -32,9 +32,9 @@
       <restart-button @restart-game="restartGame">
         <img src="./assets/restart.png" alt="restart" />
       </restart-button>
-      <set-words @set-words="setWords"
+      <words-settings @toggle-settings="toggleSettings"
         ><img src="./assets/settings.png" alt="set words"
-      /></set-words>
+      /></words-settings>
     </input-bar>
     <words-field
       v-show="settingsAreVissible"
@@ -42,6 +42,7 @@
       :timer-value="timerValue"
       @submit-words="submitWords"
     ></words-field>
+  </div>
     <end-allert
       v-if="end"
       :words="wordsCount"
@@ -51,18 +52,17 @@
       :wrong-letters="wrongLetters"
       :timer-seconds="timerValue"
     ></end-allert>
-  </div>
 </template>
 
 <script>
-import StartWindow from "./components/StartWindow.vue"
+import StartWindow from "./components/StartWindow.vue";
 import UserInput from "./components/UserInput.vue";
 import CurrentWord from "./components/CurrentWord.vue";
 import EndAllert from "./components/EndAllert.vue";
 import ShowTimer from "./components/ShowTimer.vue";
 import InputBar from "./components/InputBar.vue";
 import RestartButton from "./components/RestartButton.vue";
-import SetWords from "./components/SetWords.vue";
+import WordsSettings from "./components/WordsSettings.vue";
 import WordsField from "./components/WordsField.vue";
 
 export default {
@@ -74,7 +74,7 @@ export default {
     ShowTimer,
     InputBar,
     RestartButton,
-    SetWords,
+    WordsSettings,
     WordsField,
   },
   data() {
@@ -104,7 +104,7 @@ export default {
 
   watch: {
     letter(value) {
-      this.settingsAreVissible = false
+      this.settingsAreVissible = false;
       if (value === 1 && this.counter === 0) {
         this.restart = false;
         const that = this;
@@ -125,13 +125,13 @@ export default {
         }
       }
     },
-    counter(){
+    counter() {
       if (this.counter > 99) {
-        this.wordsInfo = [ ...this.wordsInfo, ...this.randomWords(this.words) ]
+        this.wordsInfo = [...this.wordsInfo, ...this.randomWords(this.words)];
         this.wordsInfo.splice(0, 100);
         this.counter = this.counter - 100;
       }
-    }
+    },
   },
 
   computed: {
@@ -166,8 +166,8 @@ export default {
         this.wordsCount++;
         this.counter++;
       }
-      if (enteredInput.length !== 0){
-        this.correctLetters++
+      if (enteredInput.length !== 0) {
+        this.correctLetters++;
       }
 
       this.wordsInfo[this.counter].isCorrect = "highlight";
@@ -241,11 +241,11 @@ export default {
         this.wordsInfo[0].isCorrect = "highlight";
       }
     },
-    setWords() {
+    toggleSettings() {
       this.settingsAreVissible = !this.settingsAreVissible;
     },
     submitWords(w, seconds) {
-      this.restartGame()
+      this.restartGame();
       this.words = w;
       this.settingsAreVissible = !this.settingsAreVissible;
       this.timerValue = seconds;
