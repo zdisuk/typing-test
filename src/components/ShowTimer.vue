@@ -35,7 +35,13 @@ export default {
     calcSecond() {
       return this.timerCounter === 60 ||
         this.timerCounter === 120 ||
+        this.timerCounter === 180 ||
+        this.timerCounter === 240 ||
         this.timerCounter === 300 ||
+        this.timerCounter === 360 ||
+        this.timerCounter === 420 ||
+        this.timerCounter === 480 ||
+        this.timerCounter === 540 ||
         this.timerCounter === 600 ||
         this.timerCounter === 0
         ? "00"
