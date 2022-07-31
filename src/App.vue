@@ -41,7 +41,6 @@
       :words="words"
       :timer-value="timerValue"
       @submit-words="submitWords"
-      @reset-words="resetWords"
     ></words-field>
   </div>
     <end-allert
@@ -254,10 +253,6 @@ export default {
       this.timerValue = seconds;
       this.timerSeconds = this.calcSeconds;
       this.wordsInfo = this.randomWords(this.words);
-    },
-    resetWords(words, seconds){
-      this.words = words
-      this.timerValue = seconds
     },
     toggleTimer() {
       this.timerVissible = !this.timerVissible;

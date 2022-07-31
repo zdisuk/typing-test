@@ -40,7 +40,6 @@ export default {
           this.$refs.textValue.value = data[id].words
           this.$refs.time.value = data[id].seconds
         }
-        this.$emit("reset-words", this.$refs.textValue.value, this.$refs.time.value)
       })
     }
   },
@@ -112,18 +111,6 @@ export default {
         background: #4b4b4bd2;
       }
   }
-    // margin: 25px 0 10px 0;
-    // width: 150px;
-    // background-color: rgba(35, 35, 35, 0.8235294118);
-    // color: white;
-    // font-size: 1em;
-    // &:hover {
-    //   background-color: #2323237d;
-    // }
-    // &:focus {
-    //   background-color: #2323237d;
-    // }
-  // }
 
 }
 </style>
