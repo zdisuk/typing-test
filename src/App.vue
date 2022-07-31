@@ -163,6 +163,8 @@ export default {
         this.counter++;
       } else if (enteredInput.join("") !== this.wordsInfo[this.counter].word) {
         this.wordsInfo[this.counter].isCorrect = "wrong";
+        this.wrongLetters += this.wordsInfo[this.counter].word.split("").length
+        this.wrongLetters = this.wrongLetters - enteredInput.length
         this.wrongWords++;
         this.wordsCount++;
         this.counter++;
